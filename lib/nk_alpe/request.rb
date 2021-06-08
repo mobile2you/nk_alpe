@@ -7,24 +7,46 @@ require 'uri'
 
 class NkAlpe
   class Request
-    HEADER_DEFAULTS = { 'Content-Type': 'application/json' }.freeze
+    DEFAULT_HEADERS = { 'Content-Type': 'application/json' }.freeze
     DEFAULT_ERROR_RESPONSE = { status: 500, message: 'Erro interno' }.freeze
 
-    attr_accessor :opts, :headers_default
+    attr_accessor :opts, :headers
 
-    def initialize(default_headers = {}, opts = {})
-      @headers_default = HEADER_DEFAULTS.merge(default_headers)
+    def initialize(opts_headers = {}, opts = {})
+      @headers = DEFAULT_HEADERS.merge(opts_headers)
       @opts = opts
     end
 
-    def post(endpt, body, headers = {})
-      headers = headers_default.merge(headers)
+    def post(endpt, body, opts_headers = {})
+      headers = self.headers.merge(opts_headers)
 
       body = encode_body(body, headers['Content-Type'])
 
-      request = HTTParty.post(endpt, body: body, headers: headers)
+      response = HTTParty.post(endpt, body: body, headers: headers)
 
-      generate_response(request)
+      generate_response(response)
+    end
+
+    def get(endpt, opts_headers = {})
+      headers = self.headers.merge(opts_headers)
+
+      response = HTTParty.get(endpt, headers: headers)
+
+      generate_response(response)
+    end
+
+    # @returns [String] returns bearer token
+    def bearer_token(token)
+      headers['Authorization'] = "Bearer #{token}"
+    end
+
+    # Passing a block, define multiple headers attributes
+    #
+    # @returns [Hash] returns a Hash representing the request's headers
+    def define_headers
+      yield headers if block_given?
+
+      headers
     end
 
     private
@@ -70,16 +92,6 @@ class NkAlpe
         response_hash[:message] = response
         response_hash
       end
-    end
-
-    # Convert Hash into queryble string format
-    #
-    # @return [String]
-    def to_query(hash)
-      array_query = hash.each_with_object([]) do |(key, value), array|
-        array << "#{key}=#{value}" unless value.nil?
-      end
-      array_query.empty? ? '' : "?#{array_query.join('&')}"
     end
   end
 end
