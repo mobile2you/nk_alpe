@@ -2,6 +2,7 @@
 
 require_relative 'nk_alpe/version'
 require_relative 'nk_alpe/config'
+require_relative 'nk_alpe/errors'
 
 module NkAlpe
   class << self
