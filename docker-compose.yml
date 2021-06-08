@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  spec:
+    build:
+      context: .
+      dockerfile: ./spec/setup/Dockerfile
+    entrypoint: bundle exec rake -t spec
+    volumes:
+      - .:/var/www/app
+      - gem_cache_spec:/gems
+
+volumes:
+  gem_cache_spec:

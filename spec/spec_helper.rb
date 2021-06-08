@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
+require 'bundler/setup'
 require 'nk_alpe'
+
+Dir[File.dirname(__FILE__) + '/support/**/*.rb'].sort.each do |f|
+  require f
+end
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
