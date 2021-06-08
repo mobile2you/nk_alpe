@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'active_support/core_ext/hash/indifferent_access'
 require 'httparty'
 require 'json'
 require 'uri'
@@ -57,14 +58,14 @@ class NkAlpe
       case response
       when Hash
         response[:status] = http_status
-        response
+        response.with_indifferent_access
       when String
-        response_json = {}
+        response_json = {}.with_indifferent_access
         response_json[:status] = http_status
         response_json[:message] = response
         response_json
       else
-        response_hash = {}
+        response_hash = {}.with_indifferent_access
         response_hash[:status] = http_status
         response_hash[:message] = response
         response_hash
