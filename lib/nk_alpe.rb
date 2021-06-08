@@ -7,7 +7,7 @@ require_relative 'nk_alpe/constants'
 require_relative 'nk_alpe/request'
 require_relative 'nk_alpe/api'
 
-module NkAlpe
+class NkAlpe
   class << self
     # Returns the global configurations for these module
     #
