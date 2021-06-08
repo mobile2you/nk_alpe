@@ -18,6 +18,8 @@ Gem::Specification.new do |spec|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ['lib']
 
+  gem.add_dependency 'rake', '~> 13.0.0'
+
   gem.add_development_dependency 'rspec', '~> 3.0'
   gem.add_development_dependency 'rubocop', '~> 1.7'
 end
