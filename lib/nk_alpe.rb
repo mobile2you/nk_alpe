@@ -3,6 +3,7 @@
 require_relative 'nk_alpe/version'
 require_relative 'nk_alpe/config'
 require_relative 'nk_alpe/errors'
+require_relative 'nk_alpe/constants'
 
 module NkAlpe
   class << self
