@@ -7,9 +7,9 @@ class NkAlpe
 
       class << self
         def session(body)
-          url = "#{auth_url}#{SIGN_IN_ENDPT}"
+          url = generate_url(auth_url, SIGN_IN_ENDPT)
 
-          request.post(url, body)
+          new_request.post(url, body)
         end
       end
     end
