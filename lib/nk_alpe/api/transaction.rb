@@ -16,7 +16,7 @@ class NkAlpe
         # Fetch transactions paginated
         # @note can be filter by transaction id
         #
-        def fetch(_user, hash_query)
+        def fetch(user, hash_query)
           endpoint = '/payment-order/api/v1/payment-transactions'
           url = generate_url(base_url, endpoint, hash_query)
 
