@@ -7,11 +7,11 @@ class NkAlpe
         # Returns user's extract for a determined period
         # @note the balance is also returned according to the period.
         #
-        def by_period(_user, hash_query)
+        def by_period(user, hash_query)
           endpoint = '/coda/api/v1/account-statements'
           url = generate_url(base_url, endpoint, hash_query)
 
-          request = new_request_with_auth(token)
+          request = new_request_with_auth(user.token)
 
           request.get(url)
         end
